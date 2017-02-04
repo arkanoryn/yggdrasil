@@ -10,7 +10,8 @@ defmodule Api.AbsenceControllerTest do
   # end
 
   test "Receive mock" do
-    assert Absence.mock() == %{kind: 1}
+    # assert Absence.mock() == %{ kind: 1, status: 2 }
+    assert Absence.get_message() == "test"
   end
 
   # test "lists all entries on index", %{conn: conn} do

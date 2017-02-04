@@ -24,7 +24,6 @@ defmodule Db.Mixfile do
       mod: {Db, []}
     ]
   end
-
   # Dependencies can be Hex packages:
   #
   #   {:my_dep, "~> 0.3.0"}

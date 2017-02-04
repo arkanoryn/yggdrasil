@@ -1,6 +1,10 @@
 defmodule Api.AbsenceView do
   use Api.Web, :view
 
+  def render("test_msg.json", %{absences: absence}) do
+    %{ data: %{ msg: absence } }
+  end
+
   def render("index.json", %{absences: absences}) do
     %{data: render_many(absences, Api.AbsenceView, "absence.json")}
   end
