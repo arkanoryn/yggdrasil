@@ -1,3 +1,5 @@
 .vagrant/*
 vagrant.d/.vagrant/*
 *.log
+/deps
+/_build
