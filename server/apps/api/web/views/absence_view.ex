@@ -1,7 +1,10 @@
 defmodule Api.AbsenceView do
   use Api.Web, :view
 
+  require Logger
   def render("datas.json", %{datas: datas}) do
+    IO.inspect datas
+
     datas
   end
 

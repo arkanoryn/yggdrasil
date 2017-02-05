@@ -30,4 +30,6 @@ defmodule Api.AbsenceController do
 
     render(conn, "datas.json", datas: %{data: %{deletion: "success"}})
   end
+
+  defp allow_cors(conn), do: put_resp_header(conn, "Access-Control-Allow-Origin", "*")
 end

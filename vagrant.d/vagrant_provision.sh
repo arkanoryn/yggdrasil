@@ -70,6 +70,36 @@ apt-get install -y imagemagick
 # Install phoenix
 mix archive.install https://github.com/phoenixframework/archives/raw/master/phoenix_new.ez
 
+# Install Elm
+npm install -g elm
+
+##
+# ZSH
+##
+
+# Install zsh
+apt-get install -y -q zsh
+
+# Clone oh-my-zsh
+git clone https://github.com/robbyrussell/oh-my-zsh.git /home/ubuntu/.oh-my-zsh
+
+# Create a new zsh configuration from the provided template
+cp ~/ubuntu/.oh-my-zsh/templates/zshrc.zsh-template /home/ubuntu/.zshrc
+
+# Change ownership of .zshrc
+chown ubuntu: /home/ubuntu/.zshrc
+
+# Customize theme
+sed -i -e 's/ZSH_THEME=".*"/ZSH_THEME="philips"/' /home/ubuntu/.zshrc
+
+# Set zsh as default shell
+chsh -s /bin/zsh ubuntu
+
+# Add aliases to the ~/.zshrc
+echo "alias ,server=\"cd /projects/yggdrasil/server\"" >> /home/ubuntu/.zshrc
+echo "alias ,client=\"cd /projects/yggdrasil/client\"" >> /home/ubuntu/.zshrc
+echo "alias ,ygg=\"cd /projects/yggdrasil/\"" >> /home/ubuntu/.zshrc
+
 # If seeds.exs exists we assume it is a Phoenix project
 if [ -f /vagrant/priv/repo/seeds.exs ]
   then

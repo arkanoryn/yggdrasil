@@ -7,4 +7,3 @@ config :db, Db.Repo,
   database: "dev_yggdrasil_db",
   hostname: "localhost",
   pool_size: 10
-

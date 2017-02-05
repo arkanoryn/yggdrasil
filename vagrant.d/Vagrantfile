@@ -20,5 +20,5 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     elixir_box.vm.provision :shell, :path => "vagrant_provision.sh"
   end
 
-  config.vm.synced_folder "../srcs/", "/projects/yggrdasil"
+  config.vm.synced_folder "..//", "/projects/yggdrasil/"
 end
