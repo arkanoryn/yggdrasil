@@ -6,6 +6,7 @@ import Html exposing (..)
 import Html.Attributes exposing (class, value, href)
 import Html.Events exposing (onClick)
 
+
 view : Absence -> Html Msg
 view model =
     div []
@@ -43,9 +44,10 @@ formStatus absence =
 
 backBtn : Html Msg
 backBtn =
-    button [ class "btn regular"
-           , onClick (ShowAbsences)
-           ]
+    button
+        [ class "btn regular"
+        , onClick (ShowAbsences)
+        ]
         [ i [ class "fa fa-pencil mr1" ] []
         , text "Back"
         ]

@@ -4,7 +4,8 @@ import Absences.Update
 import Material
 import Messages exposing (Msg(..))
 import Models exposing (Model)
-import Routing exposing (parseLocation)
+import Navigation exposing (..)
+import Routing exposing (parseLocation, pageToUrl)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -20,11 +21,17 @@ update msg model =
             in
                 ( { model | absences = updatedAbsences }, Cmd.map AbsencesMsg cmd )
 
-
-        OnLocationChange location ->
+        NewLocation location ->
             let
                 newRoute =
                     parseLocation location
-
             in
-                ( { model | route = newRoute } ! [] )
+                ({ model | route = newRoute } ! [])
+
+        NavigateTo maybePage ->
+            case maybePage of
+                Nothing ->
+                    model ! []
+
+                Just page ->
+                    model ! [ Navigation.newUrl (Routing.pageToUrl page) ]

@@ -1,15 +1,14 @@
 module Absences.Commands exposing (..)
 
-
+import Absences.Messages exposing (..)
+import Absences.Models exposing (AbsenceId, Absence)
 import Http
 import Json.Decode as Decode exposing (field)
-import Absences.Models exposing (AbsenceId, Absence)
-import Absences.Messages exposing (..)
 
 
 fetchAll : Cmd Msg
 fetchAll =
-    Http.get fetchAllUrl ( Decode.at ["data"] collectionDecoder )
+    Http.get fetchAllUrl (Decode.at [ "data" ] collectionDecoder)
         |> Http.send OnFetchAll
 
 
@@ -22,9 +21,10 @@ fetchAllUrl : String
 fetchAllUrl =
     hostApi ++ "/absences/"
 
+
 collectionDecoder : Decode.Decoder (List Absence)
 collectionDecoder =
-    Decode.at ["absences"] ( Decode.list memberDecoder )
+    Decode.at [ "absences" ] (Decode.list memberDecoder)
 
 
 memberDecoder : Decode.Decoder Absence

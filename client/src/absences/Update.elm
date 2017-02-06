@@ -1,6 +1,5 @@
 module Absences.Update exposing (..)
 
-
 import Absences.Messages exposing (Msg(..))
 import Absences.Models exposing (Absence)
 import Navigation
@@ -19,4 +18,4 @@ update msg absences =
             ( absences, Navigation.newUrl "#absences" )
 
         ShowAbsence id ->
-            ( absences, Navigation.newUrl ( "#absences/" ++ id ) )
+            ( absences, Navigation.newUrl ("#absences/" ++ id) )
