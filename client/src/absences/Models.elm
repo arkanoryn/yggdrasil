@@ -5,6 +5,12 @@ type alias AbsenceId =
     String
 
 
+type alias Model =
+    { absences : (List Absence)
+    , newAbsence : Absence
+    }
+
+
 type alias Absence =
     { id : AbsenceId
     , kind : String
@@ -14,11 +20,18 @@ type alias Absence =
     }
 
 
-new : Absence
-new =
-    { id = "0"
-    , kind = "vacation"
-    , status = "pending"
-    , begin_on = "2017-01-01"
-    , end_on = "2017-01-01"
+cleanAbsence : Absence
+cleanAbsence =
+    { id = ""
+    , kind = ""
+    , status = ""
+    , begin_on = ""
+    , end_on = ""
+    }
+
+
+initAbsenceModel : Model
+initAbsenceModel =
+    { absences = []
+    , newAbsence = cleanAbsence
     }

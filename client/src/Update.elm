@@ -2,6 +2,8 @@ module Update exposing (..)
 
 import Absences.Update
 import Material
+import Absences.Messages as AbsencesMsg
+import Absences.Models as AbsencesModels
 import Messages exposing (Msg(..))
 import Models exposing (Model)
 import Navigation exposing (..)
@@ -14,12 +16,12 @@ update msg model =
         Mdl msg_ ->
             Material.update Mdl msg_ model
 
-        AbsencesMsg subMsg ->
+        AbsencesMsg absenceMsg ->
             let
-                ( updatedAbsences, cmd ) =
-                    Absences.Update.update subMsg model.absences
+                ( absenceModel, cmd ) =
+                    Absences.Update.update absenceMsg model.absenceModel
             in
-                ( { model | absences = updatedAbsences }, Cmd.map AbsencesMsg cmd )
+                ( { model | absenceModel = absenceModel }, Cmd.map AbsencesMsg cmd )
 
         NewLocation location ->
             let

@@ -1,13 +1,13 @@
 module Models exposing (..)
 
-import Absences.Models exposing (Absence)
+import Absences.Models exposing (Model, initAbsenceModel)
 import Material
 import Routing
 
 
 type alias Model =
     { mdl : Material.Model
-    , absences : List Absence
+    , absenceModel : Absences.Models.Model
     , route : Routing.Route
     }
 
@@ -15,10 +15,6 @@ type alias Model =
 initialModel : Routing.Route -> Model
 initialModel route =
     { mdl = Material.model
-    , absences = []
+    , absenceModel = initAbsenceModel
     , route = route
     }
-
-
-
--- test

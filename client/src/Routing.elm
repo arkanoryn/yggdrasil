@@ -7,6 +7,7 @@ import UrlParser exposing (..)
 
 type Route
     = HomeRoute
+    | NewAbsenceRoute
     | AbsencesRoute
     | AbsenceRoute AbsenceId
     | NotFoundRoute

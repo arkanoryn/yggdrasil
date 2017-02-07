@@ -2,7 +2,6 @@ module Absences.Views.List exposing (view)
 
 import Absences.Models exposing (Absence)
 import Html exposing (..)
-import Html.Attributes exposing (class)
 import Material.Button as Button
 import Material.Icon as Icon
 import Material.Options as Options exposing (onClick)

@@ -6,5 +6,8 @@ import Http
 
 type Msg
     = OnFetchAll (Result Http.Error (List Absence))
+    | CreateNewAbsence
+    | CreateSucceeded Absence
+    | CreateFailed Http.Error
     | ShowAbsences
     | ShowAbsence AbsenceId

@@ -1,8 +1,9 @@
 module View exposing (view)
 
 import Absences.Models exposing (AbsenceId)
-import Absences.Views.Edit
+import Absences.Views.Show
 import Absences.Views.List
+import Absences.Views.New
 import Html exposing (Html, div, text, span)
 import Html.Attributes exposing (style)
 import Layout.Drawer as Drawer
@@ -42,26 +43,29 @@ pageContent model =
             div [] [ text "Home" ]
 
         AbsencesRoute ->
-            Absences.Views.List.view model model.absences
+            Absences.Views.List.view model model.absenceModel.absences
+
+        NewAbsenceRoute ->
+            Absences.Views.New.view model
 
         AbsenceRoute id ->
-            absenceEditPage model id
+            absenceShowPage model id
 
         NotFoundRoute ->
             notFoundView
 
 
-absenceEditPage : Model -> AbsenceId -> Html Msg
-absenceEditPage model absenceId =
+absenceShowPage : Model -> AbsenceId -> Html Msg
+absenceShowPage model absenceId =
     let
         maybeAbsence =
-            model.absences
+            model.absenceModel.absences
                 |> List.filter (\absence -> absence.id == absenceId)
                 |> List.head
     in
         case maybeAbsence of
             Just absence ->
-                Html.map AbsencesMsg (Absences.Views.Edit.view absence)
+                Html.map AbsencesMsg (Absences.Views.Show.view absence)
 
             Nothing ->
                 notFoundView

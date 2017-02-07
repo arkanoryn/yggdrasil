@@ -1,4 +1,4 @@
-module Absences.Views.Edit exposing (..)
+module Absences.Views.Show exposing (..)
 
 import Absences.Messages exposing (..)
 import Absences.Models exposing (..)
