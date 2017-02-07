@@ -42,11 +42,12 @@ pageContent model =
         HomeRoute ->
             div [] [ text "Home" ]
 
+        NewAbsenceRoute ->
+            Debug.log "troll" (div [] [ text "My new ppage" ])
+            -- Absences.Views.New.view model
+
         AbsencesRoute ->
             Absences.Views.List.view model model.absenceModel.absences
-
-        NewAbsenceRoute ->
-            Absences.Views.New.view model
 
         AbsenceRoute id ->
             absenceShowPage model id
@@ -68,11 +69,17 @@ absenceShowPage model absenceId =
                 Html.map AbsencesMsg (Absences.Views.Show.view absence)
 
             Nothing ->
-                notFoundView
+                absenceNotFoundView
 
 
 notFoundView : Html msg
 notFoundView =
     div []
-        [ text "Not found"
+        [ text "404 - Not found!"
+        ]
+
+absenceNotFoundView : Html msg
+absenceNotFoundView =
+    div []
+        [ text "Absence not found!"
         ]

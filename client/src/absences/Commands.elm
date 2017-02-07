@@ -1,9 +1,12 @@
 module Absences.Commands exposing (..)
 
+import Models exposing (Model)
 import Absences.Messages exposing (..)
 import Absences.Models exposing (AbsenceId, Absence)
 import Http
 import Json.Decode as Decode exposing (field)
+import Json.Encode as Encode
+import Task
 
 
 fetchAll : Cmd Msg
@@ -35,3 +38,28 @@ memberDecoder =
         (field "status" Decode.string)
         (field "begin_on" Decode.string)
         (field "end_on" Decode.string)
+
+
+encodeAbsence : Absences.Models.Absence -> Encode.Value
+encodeAbsence absence =
+    Encode.object
+        [ ( "absence"
+          , Encode.object
+                [ ( "kind", Encode.string absence.kind )
+                , ( "begin_on", Encode.string absence.begin_on )
+                , ( "end_on", Encode.string absence.end_on )
+                ]
+          )
+        ]
+
+createAbsence : Absences.Models.Absence -> Cmd Msg
+createAbsence absence =
+   Cmd.none
+    -- Http.send Http.defaultSettings
+    --     { verb = "POST"
+    --     , url = "lol" ++ "absences"
+    --     , body = Http.string (encodeAbsence absence |> Encode.encode 0)
+    --     , headers = [ ( "Content-Type", "application/json" ) ]
+    --     }
+    --     |> Http.fromJson (Decode.at ["data"] memberDecoder)
+    --     |> Task.perform CreateAbsenceFailed CreateAbsenceSucceeded
