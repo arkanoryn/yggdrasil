@@ -37,11 +37,11 @@ initAbsenceModel =
     }
 
 
-validation : Validation () Absence
-validation =
-    map4 Absence
-        (field "id" string)
-        (field "kind" string)
-        (field "status" string)
-        (field "begin_on" string)
-        (field "end_on" string)
+-- validation : Validation () Absence
+-- validation =
+--     map4 Absence
+--         (field "id" string)
+--         (field "kind" string)
+--         (field "status" string)
+--         (field "begin_on" string)
+--         (field "end_on" string)
