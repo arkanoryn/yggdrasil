@@ -78,6 +78,6 @@ addAbsenceButton model =
         [ Button.fab
         , Button.colored
         , Button.ripple
-        , Options.onClick <| NavigateTo <| Just AbsencesRoute
+        , Options.onClick <| NavigateTo <| Just NewAbsenceRoute
         ]
         [ Icon.i "add" ]

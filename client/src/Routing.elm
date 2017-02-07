@@ -17,6 +17,7 @@ matchers : Parser (Route -> a) a
 matchers =
     oneOf
         [ map HomeRoute top
+        , map NewAbsenceRoute (s "absences" </> s "new")
         , map AbsenceRoute (s "absences" </> string)
         , map AbsencesRoute (s "absences")
         ]
@@ -43,10 +44,14 @@ pageToUrl route =
                 AbsencesRoute ->
                     "absences"
 
+                NewAbsenceRoute ->
+                    "absences/new"
+
                 AbsenceRoute id ->
                     "absences/" ++ id
 
-                _ ->
-                    "notofound"
+                NotFoundRoute ->
+                    "oops... not found"
+
     in
         "#" ++ url
