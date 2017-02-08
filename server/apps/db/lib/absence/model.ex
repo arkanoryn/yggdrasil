@@ -1,4 +1,8 @@
 defmodule Db.Absence.Model do
+  @moduledoc ~S"""
+  Defines Absence Ecto Schema
+  """
+
   use Ecto.Schema
 
   schema "absences" do

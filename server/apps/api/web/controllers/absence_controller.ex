@@ -26,7 +26,7 @@ defmodule Api.AbsenceController do
   end
 
   def delete(conn, %{"id" => id}) do
-    { :ok, _absence } = Absence.Public.Actions.destroy(id)
+    { :ok, _absence } = Absence.Public.Actions.delete(id)
 
     render(conn, "datas.json", datas: %{data: %{deletion: "success"}})
   end

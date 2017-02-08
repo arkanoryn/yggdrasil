@@ -1,7 +1,20 @@
 defmodule Absence.Public.Requests do
-  @moduledoc """
+  @moduledoc ~S"""
+  Define GraphQL Requests that will be send to the DB interface
+
+  Read http://graphql.org/learn/ for further information regarding GraphQL syntax
+
+
+  # Arguments
+  All requests should receive a `list` of fields they wish to retrieve from the
+  database
+
+  Each item of the list must be a `String.t`
   """
 
+  @doc """
+  # TODO
+  """
   def all(fields_list) do
     """
     {
@@ -13,6 +26,9 @@ defmodule Absence.Public.Requests do
     """
   end
 
+  @doc """
+  # TODO
+  """
   def get(id, fields_list) do
     """
     {
@@ -24,6 +40,9 @@ defmodule Absence.Public.Requests do
     """
   end
 
+  @doc """
+  # TODO
+  """
   def update(id, params, fields_list) do
     """
     mutation UpdateAbsence {
@@ -38,6 +57,9 @@ defmodule Absence.Public.Requests do
     """
   end
 
+  @doc """
+  # TODO
+  """
   def create(params, fields_list) do
     """
     mutation CreateAbsence {
@@ -49,6 +71,9 @@ defmodule Absence.Public.Requests do
     """
   end
 
+  @doc """
+  # TODO
+  """
   def delete(id) do
     """
     mutation DeleteAbsence {
@@ -61,7 +86,7 @@ defmodule Absence.Public.Requests do
   end
 
   @spec format_list(list(String.t)) :: String.t
-  def format_list(fields_list) do
+  defp format_list(fields_list) do
     Enum.join(fields_list, "\n")
   end
 end

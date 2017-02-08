@@ -1,4 +1,14 @@
 defmodule Db.Absence.Provider do
+  @moduledoc """
+  Define the entry point for each Business Logic Application to the Database
+
+  External application should call `reply/2` if they expect a result from the
+  database.
+
+  Today, the DB interface is a GenServer
+  In the future, it could be a pool that populates a list and open async tasks
+  """
+
   use GenServer
   use Absinthe.Schema
 
