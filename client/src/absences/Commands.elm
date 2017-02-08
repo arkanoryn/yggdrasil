@@ -25,6 +25,11 @@ fetchAllUrl =
     hostApi ++ "/absences/"
 
 
+createAbsenceUrl : String
+createAbsenceUrl =
+    hostApi ++ "/absences"
+
+
 collectionDecoder : Decode.Decoder (List Absence)
 collectionDecoder =
     Decode.at [ "absences" ] (Decode.list memberDecoder)
@@ -40,8 +45,8 @@ memberDecoder =
         (field "end_on" Decode.string)
 
 
-encodeAbsence : Absences.Models.Absence -> Encode.Value
-encodeAbsence absence =
+encodedAbsence : Absences.Models.Absence -> Encode.Value
+encodedAbsence absence =
     Encode.object
         [ ( "absence"
           , Encode.object
@@ -52,14 +57,21 @@ encodeAbsence absence =
           )
         ]
 
-createAbsence : Absences.Models.Absence -> Cmd Msg
-createAbsence absence =
-   Cmd.none
-    -- Http.send Http.defaultSettings
-    --     { verb = "POST"
-    --     , url = "lol" ++ "absences"
-    --     , body = Http.string (encodeAbsence absence |> Encode.encode 0)
-    --     , headers = [ ( "Content-Type", "application/json" ) ]
-    --     }
-    --     |> Http.fromJson (Decode.at ["data"] memberDecoder)
-    --     |> Task.perform CreateAbsenceFailed CreateAbsenceSucceeded
+
+create : Absence -> Cmd Msg
+create absence =
+    createAbsenceRequest absence
+        |> Http.send OnCreate
+
+
+createAbsenceRequest : Absences.Models.Absence -> Http.Request Absence
+createAbsenceRequest absence =
+    Http.request
+        { body = encodedAbsence absence |> Http.jsonBody
+        , expect = Http.expectJson memberDecoder
+        , headers = []
+        , method = "POST"
+        , timeout = Nothing
+        , url = createAbsenceUrl
+        , withCredentials = False
+        }

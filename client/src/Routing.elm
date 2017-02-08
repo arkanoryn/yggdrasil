@@ -52,6 +52,5 @@ pageToUrl route =
 
                 NotFoundRoute ->
                     "oops... not found"
-
     in
         "#" ++ url

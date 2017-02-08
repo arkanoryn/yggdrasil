@@ -2,11 +2,8 @@ module Absences.Update exposing (..)
 
 import Messages
 import Absences.Messages exposing (Msg(..))
-import Absences.Models exposing (Model, Absence, validation)
+import Absences.Models exposing (Model, Absence)
 import Navigation
-import Form
-import Form.Validate as Validate exposing (..)
-import Form.Input as Input
 import Absences.Commands as API
 
 
@@ -19,36 +16,51 @@ update msg absenceModel =
         OnFetchAll (Err error) ->
             absenceModel ! []
 
+        OnCreate (Ok newAbsence) ->
+                { absenceModel | newAbsence =Absences.Models.initAbsence } ! []
+
+        OnCreate (Err error) ->
+            let
+                _ =
+                    Debug.log "Create absence failed: " error
+            in
+            absenceModel ! []
+
         CreateAbsence ->
-            absenceModel ! []
-
-        CreateAbsenceSucceeded _ ->
-            absenceModel ! []
-
-        CreateAbsenceFailed error ->
-            absenceModel ! []
+            absenceModel ! [ API.create absenceModel.newAbsence ]
 
         ShowAbsences ->
-            ( absenceModel, Navigation.newUrl "#absences" )
+            absenceModel ! [ Navigation.newUrl "#absences" ]
 
         ShowAbsence id ->
-            ( absenceModel, Navigation.newUrl ("#absences/" ++ id) )
+            absenceModel ! [ Navigation.newUrl ("#absences/" ++ id) ]
 
-        KindDropdownChanged selectedValue ->
+        ChangeKind newKind ->
             let
                 oldNewAbsence =
                     absenceModel.newAbsence
-                cleanValue =
-                    case selectedValue of
-                        Just value ->
-                            value
-                        Nothing ->
-                            ""
             in
-                { absenceModel | newAbsence =
-                      { oldNewAbsence | kind = cleanValue }
+                { absenceModel
+                    | newAbsence = { oldNewAbsence | kind = newKind }
                 }
                     ! []
 
-        NewAbsenceFormMsg formMsg ->
-            ( { absenceModel | newAbsence = Form.update validation formMsg form }, Cmd.none )
+        ChangeBeginOn newBeginOn ->
+            let
+                oldNewAbsence =
+                    absenceModel.newAbsence
+            in
+                { absenceModel
+                    | newAbsence = { oldNewAbsence | begin_on = newBeginOn }
+                }
+                    ! []
+
+        ChangeEndOn newEndOn ->
+            let
+                oldNewAbsence =
+                    absenceModel.newAbsence
+            in
+                { absenceModel
+                    | newAbsence = { oldNewAbsence | end_on = newEndOn }
+                }
+                    ! []

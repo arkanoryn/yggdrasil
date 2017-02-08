@@ -70,6 +70,7 @@ viewShowBtn model index absence =
         ]
         [ Icon.i "pageview" ]
 
+
 addAbsenceButton : Model -> Html Msg
 addAbsenceButton model =
     Button.render Mdl
