@@ -68,7 +68,7 @@ createAbsenceRequest : Absences.Models.Absence -> Http.Request Absence
 createAbsenceRequest absence =
     Http.request
         { body = encodedAbsence absence |> Http.jsonBody
-        , expect = Http.expectJson memberDecoder
+        , expect = Http.expectJson (Decode.at ["data"] (Decode.at ["create_absence"] memberDecoder))
         , headers = []
         , method = "POST"
         , timeout = Nothing

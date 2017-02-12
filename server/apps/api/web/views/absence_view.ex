@@ -8,8 +8,8 @@ defmodule Api.AbsenceView do
     datas
   end
 
-  def render("test_msg.json", %{absences: absence}) do
-    %{ data: %{ msg: absence } }
+  def render("test_msg.json", %{absence: absence}) do
+    absence
   end
 
   def render("index.json", %{absences: absences}) do

@@ -24,7 +24,6 @@ subscriptions model =
     Material.subscriptions Mdl model
 
 
-
 -- MAIN
 
 

@@ -1,6 +1,5 @@
 module Absences.Update exposing (..)
 
-import Messages
 import Absences.Messages exposing (Msg(..))
 import Absences.Models exposing (Model, Absence)
 import Navigation
@@ -17,7 +16,16 @@ update msg absenceModel =
             absenceModel ! []
 
         OnCreate (Ok newAbsence) ->
-                { absenceModel | newAbsence =Absences.Models.initAbsence } ! []
+            let
+                _ =
+                    Debug.log "Create absence successful: " newAbsence
+                newAbsencesList =
+                    absenceModel.absences ++ [ newAbsence ]
+            in
+                { absenceModel
+                    | newAbsence = Absences.Models.initAbsence
+                    , absences = newAbsencesList
+                } ! [ Navigation.newUrl "#absences" ]
 
         OnCreate (Err error) ->
             let
@@ -30,7 +38,7 @@ update msg absenceModel =
             absenceModel ! [ API.create absenceModel.newAbsence ]
 
         ShowAbsences ->
-            absenceModel ! [ Navigation.newUrl "#absences" ]
+            absenceModel ! [ (Navigation.newUrl "#absences") ]
 
         ShowAbsence id ->
             absenceModel ! [ Navigation.newUrl ("#absences/" ++ id) ]

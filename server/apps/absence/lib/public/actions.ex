@@ -51,9 +51,10 @@ defmodule Absence.Public.Actions do
   """
   def create(absence_params) do
     wished_fields = ["id", "kind", "status", "begin_on", "end_on"]
+    absence_params = Map.put(absence_params, "status", "pending")
 
     # TODO use guard instead of case
-    case Absence.Public.Validators.valid_absences?(absence_params) do
+    case Absence.Public.Validators.valid_absence?(absence_params) do
       true ->
         Provider.reply(:absence_provider, Requests.create(absence_params, wished_fields))
       false ->
