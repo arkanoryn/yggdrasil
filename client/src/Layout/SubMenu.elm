@@ -7,7 +7,7 @@ import Models exposing (Model)
 
 view : Model -> ( List (Html Msg), List a )
 view model =
-    ( tabTitles, [] )
+    ( [], [] )
 
 
 tabTitles : List (Html a)

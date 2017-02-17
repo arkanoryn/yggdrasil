@@ -6,20 +6,20 @@ import UrlParser exposing (..)
 
 
 type Route
-    = HomeRoute
-    | NewAbsenceRoute
-    | AbsencesRoute
-    | AbsenceRoute AbsenceId
-    | NotFoundRoute
+    = Home
+    | AbsenceNew
+    | AbsenceIndex
+    | AbsenceShow AbsenceId
+    | NotFound
 
 
 matchers : Parser (Route -> a) a
 matchers =
     oneOf
-        [ map HomeRoute top
-        , map NewAbsenceRoute (s "absences" </> s "new")
-        , map AbsenceRoute (s "absences" </> string)
-        , map AbsencesRoute (s "absences")
+        [ map Home top
+        , map AbsenceNew (s "absences" </> s "new")
+        , map AbsenceShow (s "absences" </> string)
+        , map AbsenceIndex (s "absences")
         ]
 
 
@@ -30,7 +30,7 @@ parseLocation location =
             route
 
         Nothing ->
-            NotFoundRoute
+            NotFound
 
 
 pageToUrl : Route -> String
@@ -38,19 +38,19 @@ pageToUrl route =
     let
         url =
             case route of
-                HomeRoute ->
+                Home ->
                     ""
 
-                AbsencesRoute ->
+                AbsenceIndex ->
                     "absences"
 
-                NewAbsenceRoute ->
+                AbsenceNew ->
                     "absences/new"
 
-                AbsenceRoute id ->
+                AbsenceShow id ->
                     "absences/" ++ id
 
-                NotFoundRoute ->
+                NotFound ->
                     "oops... not found"
     in
         "#" ++ url

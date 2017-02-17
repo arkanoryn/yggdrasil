@@ -19,39 +19,52 @@ import Routing exposing (Route(..))
 
 view : Model -> Html Msg
 view model =
-    Scheme.topWithScheme Color.Indigo Color.DeepOrange <|
+    Scheme.topWithScheme Color.Blue Color.LightBlue <|
         Layout.render Mdl
             model.mdl
             [ Layout.fixedHeader
             , Layout.fixedDrawer
             ]
-            { header = (Header.view model)
+            { header = (determineHeader model)
             , drawer = (Drawer.view model)
             , tabs = (SubMenu.view model)
             , main =
                 [ div
                     [ style [ ( "padding", "1rem" ) ] ]
-                    [ pageContent model ]
+                    [ body model ]
                 ]
             }
 
 
-pageContent : Model -> Html Msg
-pageContent model =
+determineHeader : Model -> List (Html Msg)
+determineHeader model =
     case model.route of
-        HomeRoute ->
+        AbsenceNew ->
+            Absences.Views.New.header model
+
+        AbsenceIndex ->
+            Absences.Views.List.header model
+
+        _ ->
+            Header.defaultHeader "Header undefined!!"
+
+
+body : Model -> Html Msg
+body model =
+    case model.route of
+        Home ->
             div [] [ text "Home" ]
 
-        NewAbsenceRoute ->
+        AbsenceNew ->
             Absences.Views.New.view model model.absenceModel
 
-        AbsencesRoute ->
+        AbsenceIndex ->
             Absences.Views.List.view model model.absenceModel.absences
 
-        AbsenceRoute id ->
+        AbsenceShow id ->
             absenceShowPage model id
 
-        NotFoundRoute ->
+        NotFound ->
             notFoundView
 
 
@@ -68,18 +81,11 @@ absenceShowPage model absenceId =
                 Html.map AbsencesMsg (Absences.Views.Show.view absence)
 
             Nothing ->
-                absenceNotFoundView
+                notFoundView
 
 
 notFoundView : Html msg
 notFoundView =
     div []
         [ text "404 - Not found!"
-        ]
-
-
-absenceNotFoundView : Html msg
-absenceNotFoundView =
-    div []
-        [ text "Absence not found!"
         ]

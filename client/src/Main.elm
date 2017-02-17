@@ -15,13 +15,15 @@ init location =
     let
         currentRoute =
             Routing.parseLocation location
+        model = initialModel currentRoute
     in
-        ( initialModel currentRoute, Cmd.map AbsencesMsg fetchAll )
+        model ! [ Cmd.map AbsencesMsg (fetchAll model) ]
 
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
     Material.subscriptions Mdl model
+
 
 
 -- MAIN

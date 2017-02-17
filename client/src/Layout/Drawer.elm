@@ -37,19 +37,19 @@ viewMenuItem model menuItem =
 
 
 type alias MenuItem =
-    { text : String
+    { text :     String
     , iconName : String
-    , route : Maybe Routing.Route
+    , route :    Maybe Routing.Route
     }
 
 
 menuItems : List MenuItem
 menuItems =
-    [ { text = "Dashboard", iconName = "dashboard", route = (Just HomeRoute) }
-    , { text = "Absences", iconName = "flight_takeoff", route = (Just AbsencesRoute) }
-    , { text = "Last Activity", iconName = "alarm", route = Nothing }
-    , { text = "Timesheets", iconName = "event", route = Nothing }
-    , { text = "Reports", iconName = "list", route = Nothing }
-    , { text = "Organizations", iconName = "store", route = Nothing }
-    , { text = "Project", iconName = "view_list", route = Nothing }
+    [ { text = "Dashboard",     iconName = "dashboard",      route = (Just Home) }
+    , { text = "Absences",      iconName = "flight_takeoff", route = (Just AbsenceIndex) }
+    , { text = "Last Activity", iconName = "alarm",          route = Nothing }
+    , { text = "Timesheets",    iconName = "event",          route = Nothing }
+    , { text = "Reports",       iconName = "list",           route = Nothing }
+    , { text = "Organizations", iconName = "store",          route = Nothing }
+    , { text = "Project",       iconName = "view_list",      route = Nothing }
     ]

@@ -1,28 +1,29 @@
-module Absences.Views.List exposing (view)
+module Absences.Views.List exposing (view, header)
 
 import Absences.Models exposing (Absence)
 import Html exposing (..)
+import Layout.Header
 import Material.Button as Button
 import Material.Icon as Icon
-import Material.Options as Options exposing (onClick)
+import Material.Options as Options exposing (onClick, css)
 import Material.Table as Table
 import Messages exposing (..)
 import Models exposing (Model)
 import Routing exposing (Route(..))
 
 
-view : Model -> List Absence -> Html Msg
-view model absences =
-    div []
-        [ pageHeader model absences
-        , absenceTable model absences
+header : Model -> List (Html Msg)
+header model =
+    Layout.Header.defaultHeaderWithNavigation
+        "Absences"
+        [ addAbsenceButton model
         ]
 
 
-pageHeader : Model -> List Absence -> Html Msg
-pageHeader model absences =
+view : Model -> List Absence -> Html Msg
+view model absences =
     div []
-        [ addAbsenceButton model
+        [ absenceTable model absences
         ]
 
 
@@ -66,7 +67,7 @@ viewShowBtn model index absence =
         [ Button.minifab
         , Button.colored
         , Button.ripple
-        , Options.onClick <| NavigateTo <| Just (AbsenceRoute absence.id)
+        , Options.onClick <| NavigateTo <| Just (AbsenceShow absence.id)
         ]
         [ Icon.i "pageview" ]
 
@@ -76,9 +77,16 @@ addAbsenceButton model =
     Button.render Mdl
         [ 0 ]
         model.mdl
-        [ Button.fab
+        [ css "position" "fixed"
+        , css "display" "block"
+        , css "right" "0"
+        , css "top" "0"
+        , css "margin-right" "35px"
+        , css "margin-top" "35px"
+        , css "z-index" "900"
+        , Button.fab
         , Button.colored
         , Button.ripple
-        , Options.onClick <| NavigateTo <| Just NewAbsenceRoute
+        , Options.onClick <| NavigateTo <| Just AbsenceNew
         ]
         [ Icon.i "add" ]

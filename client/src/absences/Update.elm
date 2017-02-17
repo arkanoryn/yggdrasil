@@ -1,13 +1,14 @@
 module Absences.Update exposing (..)
 
-import Absences.Messages exposing (Msg(..))
-import Absences.Models exposing (Model, Absence)
-import Navigation
 import Absences.Commands as API
+import Absences.Messages exposing (Msg(..))
+import Absences.Models exposing (Absence)
+import Models exposing (Model)
+import Navigation
 
 
-update : Msg -> Absences.Models.Model -> ( Absences.Models.Model, Cmd Msg )
-update msg absenceModel =
+update : Model -> Msg -> Absences.Models.Model -> ( Absences.Models.Model, Cmd Msg )
+update model msg absenceModel =
     case msg of
         OnFetchAll (Ok newAbsences) ->
             { absenceModel | absences = newAbsences } ! []
@@ -19,23 +20,25 @@ update msg absenceModel =
             let
                 _ =
                     Debug.log "Create absence successful: " newAbsence
+
                 newAbsencesList =
                     absenceModel.absences ++ [ newAbsence ]
             in
                 { absenceModel
                     | newAbsence = Absences.Models.initAbsence
                     , absences = newAbsencesList
-                } ! [ Navigation.newUrl "#absences" ]
+                }
+                    ! [ Navigation.newUrl "#absences" ]
 
         OnCreate (Err error) ->
             let
                 _ =
                     Debug.log "Create absence failed: " error
             in
-            absenceModel ! []
+                absenceModel ! []
 
         CreateAbsence ->
-            absenceModel ! [ API.create absenceModel.newAbsence ]
+            absenceModel ! [ API.create model absenceModel.newAbsence ]
 
         ShowAbsences ->
             absenceModel ! [ (Navigation.newUrl "#absences") ]

@@ -1,33 +1,29 @@
 module Absences.Commands exposing (..)
 
-import Models exposing (Model)
 import Absences.Messages exposing (..)
 import Absences.Models exposing (AbsenceId, Absence)
 import Http
 import Json.Decode as Decode exposing (field)
 import Json.Encode as Encode
+import Models exposing (Model)
 import Task
 
 
-fetchAll : Cmd Msg
-fetchAll =
-    Http.get fetchAllUrl (Decode.at [ "data" ] collectionDecoder)
+fetchAll : Model -> Cmd Msg
+fetchAll model =
+    Http.get (fetchAllUrl model.apiEndpoint) (Decode.at [ "data" ] collectionDecoder)
         |> Http.send OnFetchAll
 
 
-hostApi : String
-hostApi =
-    "http://192.168.55.55:4000/api"
+
+fetchAllUrl : String -> String
+fetchAllUrl endpoint =
+    endpoint ++ "/absences/"
 
 
-fetchAllUrl : String
-fetchAllUrl =
-    hostApi ++ "/absences/"
-
-
-createAbsenceUrl : String
-createAbsenceUrl =
-    hostApi ++ "/absences"
+createAbsenceUrl : String -> String
+createAbsenceUrl endpoint =
+    endpoint ++ "/absences"
 
 
 collectionDecoder : Decode.Decoder (List Absence)
@@ -58,20 +54,20 @@ encodedAbsence absence =
         ]
 
 
-create : Absence -> Cmd Msg
-create absence =
-    createAbsenceRequest absence
+create : Model -> Absence -> Cmd Msg
+create model absence =
+    createAbsenceRequest model absence
         |> Http.send OnCreate
 
 
-createAbsenceRequest : Absences.Models.Absence -> Http.Request Absence
-createAbsenceRequest absence =
+createAbsenceRequest : Model -> Absences.Models.Absence -> Http.Request Absence
+createAbsenceRequest model absence =
     Http.request
         { body = encodedAbsence absence |> Http.jsonBody
-        , expect = Http.expectJson (Decode.at ["data"] (Decode.at ["create_absence"] memberDecoder))
+        , expect = Http.expectJson (Decode.at [ "data" ] (Decode.at [ "create_absence" ] memberDecoder))
         , headers = []
         , method = "POST"
         , timeout = Nothing
-        , url = createAbsenceUrl
+        , url = createAbsenceUrl model.apiEndpoint
         , withCredentials = False
         }

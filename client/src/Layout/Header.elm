@@ -1,25 +1,26 @@
-module Layout.Header exposing (view)
+module Layout.Header exposing (defaultHeader, defaultHeaderWithNavigation)
 
-import Html exposing (Html, div, text, span)
+import Html exposing (Html, text, span)
 import Material.Layout as Layout
-import Messages exposing (Msg(..))
-import Models exposing (Model)
+import Messages exposing (Msg)
 
 
-view : Model -> List (Html Msg)
-view model =
-    [ view_ model ]
-
-
-view_ : Model -> Html Msg
-view_ model =
-    Layout.row
+defaultHeader : String -> List (Html Msg)
+defaultHeader headerText =
+    [ Layout.row
         []
-        [ Layout.title [] [ text "My Intranet" ]
+        [ Layout.title [] [ text headerText ]
+        ]
+    ]
+
+
+defaultHeaderWithNavigation : String -> List (Html Msg) -> List (Html Msg)
+defaultHeaderWithNavigation headerText navigation =
+    [ Layout.row
+        []
+        [ Layout.title [] [ text headerText ]
         , Layout.spacer
         , Layout.navigation []
-            [ Layout.link
-                [ Layout.href "https://github.com/arkanoryn/yggdrasil" ]
-                [ span [] [ text "github" ] ]
-            ]
+            navigation
         ]
+    ]

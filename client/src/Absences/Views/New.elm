@@ -1,40 +1,43 @@
-module Absences.Views.New exposing (view)
+module Absences.Views.New exposing (view, header)
 
-import Html exposing (Html, div, text, label)
-import Messages exposing (Msg(..))
-import Models exposing (Model)
-import Material.Button as Button
-import Material.Options as Options exposing (onClick)
-import Material.Textfield as Textfield
-import Material.Grid exposing (grid, size, cell, Device(..))
 import Absences.Messages
 import Absences.Models
-import Routing exposing (Route(..))
+import Html exposing (Html, div, text, label)
+import Layout.Header
+import Material.Button as Button
+import Material.Grid exposing (grid, size, cell, stretch, Device(..), offset)
+import Material.Options exposing (Style, onClick, onInput, css)
+import Material.Textfield as Textfield
+import Messages exposing (Msg(..))
+import Models exposing (Model)
+
+
+header : Model -> List (Html Msg)
+header model =
+    Layout.Header.defaultHeader "New absence"
 
 
 view : Model -> Absences.Models.Model -> Html Msg
 view model absenceModel =
     grid []
-        [ cell [ size All 12 ]
-            [ kindField model absenceModel ]
-          , cell [ size All 6 ]
-              [ beginOnField model absenceModel ]
-          , cell [ size All 6 ]
-              [ endOnField model absenceModel ]
-        , cell [ size All 12 ]
-            [ submitButton model absenceModel ]
+        [ cell cellOptions [ kindField model absenceModel ]
+        , cell [ size All 6 ] [ beginOnField model absenceModel ]
+        , cell [ size All 6 ] [ endOnField model absenceModel ]
+        , cell [ size All 2 ] [ submitButton model absenceModel ]
         ]
 
 
 kindField : Model -> Absences.Models.Model -> Html Msg
 kindField model absenceModel =
     Textfield.render Mdl
-        [ 1, 2, 0 ]
+        [ 0, 0, 0 ]
         model.mdl
         [ Textfield.label "kind"
+        , Textfield.floatingLabel
         , Textfield.text_
+        , css "width" "100%"
         , Textfield.value absenceModel.newAbsence.kind
-        , Options.onInput (AbsencesMsg << Absences.Messages.ChangeKind)
+        , onInput (AbsencesMsg << Absences.Messages.ChangeKind)
         ]
         []
 
@@ -42,12 +45,14 @@ kindField model absenceModel =
 beginOnField : Model -> Absences.Models.Model -> Html Msg
 beginOnField model absenceModel =
     Textfield.render Mdl
-        [ 1, 2, 0 ]
+        [ 0, 0, 1 ]
         model.mdl
         [ Textfield.label "begin_on"
+        , Textfield.floatingLabel
         , Textfield.text_
+        , css "width" "100%"
         , Textfield.value absenceModel.newAbsence.begin_on
-        , Options.onInput (AbsencesMsg << Absences.Messages.ChangeBeginOn)
+        , onInput (AbsencesMsg << Absences.Messages.ChangeBeginOn)
         ]
         []
 
@@ -55,14 +60,17 @@ beginOnField model absenceModel =
 endOnField : Model -> Absences.Models.Model -> Html Msg
 endOnField model absenceModel =
     Textfield.render Mdl
-        [ 1, 2, 0 ]
+        [ 0, 0, 2 ]
         model.mdl
         [ Textfield.label "end_on"
+        , Textfield.floatingLabel
         , Textfield.text_
+        , css "width" "100%"
         , Textfield.value absenceModel.newAbsence.end_on
-        , Options.onInput (AbsencesMsg << Absences.Messages.ChangeEndOn)
+        , onInput (AbsencesMsg << Absences.Messages.ChangeEndOn)
         ]
         []
+
 
 submitButton : Model -> Absences.Models.Model -> Html Msg
 submitButton model absenceModel =
@@ -72,7 +80,8 @@ submitButton model absenceModel =
         [ Button.raised
         , Button.ripple
         , Button.colored
-        , Options.onClick (AbsencesMsg Absences.Messages.CreateAbsence)
+        , css "width" "100%"
+        , onClick (AbsencesMsg Absences.Messages.CreateAbsence)
         ]
         [ text "Submit" ]
 
@@ -98,3 +107,10 @@ kindDropdownOptions =
 -- tagged : Form.Msg -> Msg
 -- tagged =
 --     AbsencesMsg << Absences.Messages.NewAbsenceFormMsg
+
+
+cellOptions : List (Style a)
+cellOptions =
+    [ size All 12
+    , stretch
+    ]

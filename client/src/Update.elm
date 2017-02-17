@@ -19,7 +19,7 @@ update msg model =
         AbsencesMsg absenceMsg ->
             let
                 ( absenceModel, cmd ) =
-                    Absences.Update.update absenceMsg model.absenceModel
+                    Absences.Update.update model absenceMsg model.absenceModel
             in
                 ( { model | absenceModel = absenceModel }, Cmd.map AbsencesMsg cmd )
 
