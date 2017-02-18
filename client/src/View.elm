@@ -15,6 +15,7 @@ import Material.Scheme as Scheme
 import Messages exposing (Msg(..))
 import Models exposing (Model)
 import Routing exposing (Route(..))
+import Users.Views.Index
 
 
 view : Model -> Html Msg
@@ -51,21 +52,28 @@ determineHeader model =
 
 body : Model -> Html Msg
 body model =
-    case model.route of
-        Home ->
-            div [] [ text "Home" ]
+    let
+        _ =
+            Debug.log "route:" model.route
+    in
+        case model.route of
+            Home ->
+                div [] [ text "Home" ]
 
-        AbsenceNew ->
-            Absences.Views.New.view model model.absenceModel
+            AbsenceNew ->
+                Absences.Views.New.view model model.absenceModel
 
-        AbsenceIndex ->
-            Absences.Views.List.view model model.absenceModel.absences
+            AbsenceIndex ->
+                Absences.Views.List.view model model.absenceModel.absences
 
-        AbsenceShow id ->
-            absenceShowPage model id
+            AbsenceShow id ->
+                absenceShowPage model id
 
-        NotFound ->
-            notFoundView
+            UsersIndex ->
+                Users.Views.Index.view model
+
+            NotFound ->
+                notFoundView
 
 
 absenceShowPage : Model -> AbsenceId -> Html Msg
