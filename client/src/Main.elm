@@ -15,7 +15,9 @@ init location =
     let
         currentRoute =
             Routing.parseLocation location
-        model = initialModel currentRoute
+
+        model =
+            initialModel currentRoute
     in
         model ! [ Cmd.map AbsencesMsg (fetchAll model) ]
 

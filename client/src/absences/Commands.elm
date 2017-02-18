@@ -15,7 +15,6 @@ fetchAll model =
         |> Http.send OnFetchAll
 
 
-
 fetchAllUrl : String -> String
 fetchAllUrl endpoint =
     endpoint ++ "/absences/"

@@ -2,12 +2,11 @@ module Update exposing (..)
 
 import Absences.Update
 import Material
-import Absences.Messages as AbsencesMsg
-import Absences.Models as AbsencesModels
 import Messages exposing (Msg(..))
 import Models exposing (Model)
 import Navigation exposing (..)
 import Routing exposing (parseLocation, pageToUrl)
+import Users.Update
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -23,6 +22,13 @@ update msg model =
             in
                 ( { model | absenceModel = absenceModel }, Cmd.map AbsencesMsg cmd )
 
+        UsersMsg userMsg ->
+            let
+                ( userModel, cmd ) =
+                    Users.Update.update model userMsg model.userModel
+            in
+                ( { model | userModel = userModel }, Cmd.map UsersMsg cmd )
+
         NewLocation location ->
             let
                 newRoute =
@@ -36,4 +42,4 @@ update msg model =
                     model ! []
 
                 Just page ->
-                    model ! [ Navigation.newUrl (Routing.pageToUrl page) ]
+                    { model | route = page } ! [ Navigation.newUrl (Routing.pageToUrl page) ]

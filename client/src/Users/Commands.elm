@@ -8,9 +8,11 @@ import Task
 import Users.Models
 import Users.Messages exposing (Msg(..))
 
+
 registerUrl : Model -> String
 registerUrl model =
     model.apiEndpoint ++ "users"
+
 
 userEncoder : Users.Models.User -> Encode.Value
 userEncoder user =
@@ -25,12 +27,11 @@ userEncoder user =
         ]
 
 
-
 authUser : Model -> String -> Cmd Msg
 authUser model apiUrl =
     { verb = "POST"
-    , headers = [ ("Content-Type", "application/json") ]
+    , headers = [ ( "Content-Type", "application/json" ) ]
     , url = apiUrl
     , body = Http.jsonBody <| userEncoder model
     }
-    |> Http.send CreateUser
+        |> Http.send CreateUser

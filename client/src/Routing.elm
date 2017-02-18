@@ -10,6 +10,7 @@ type Route
     | AbsenceNew
     | AbsenceIndex
     | AbsenceShow AbsenceId
+    | UsersIndex
     | NotFound
 
 
@@ -20,6 +21,7 @@ matchers =
         , map AbsenceNew (s "absences" </> s "new")
         , map AbsenceShow (s "absences" </> string)
         , map AbsenceIndex (s "absences")
+        , map UsersIndex (s "users")
         ]
 
 
@@ -49,6 +51,9 @@ pageToUrl route =
 
                 AbsenceShow id ->
                     "absences/" ++ id
+
+                UsersIndex ->
+                    "users"
 
                 NotFound ->
                     "oops... not found"
