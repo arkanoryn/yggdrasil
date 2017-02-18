@@ -14,7 +14,11 @@ update model msg absenceModel =
             { absenceModel | absences = newAbsences } ! []
 
         OnFetchAll (Err error) ->
-            absenceModel ! []
+            let
+                _ =
+                    Debug.log "fetch" error
+            in
+                absenceModel ! []
 
         OnCreate (Ok newAbsence) ->
             let
