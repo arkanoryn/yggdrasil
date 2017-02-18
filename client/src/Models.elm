@@ -1,6 +1,7 @@
 module Models exposing (..)
 
-import Absences.Models exposing (Model, initAbsenceModel)
+import Absences.Models exposing (initAbsenceModel)
+import Users.Models exposing (initUserModel)
 import Material
 import Routing
 
@@ -10,6 +11,7 @@ type alias Model =
     , route :        Routing.Route
     , apiEndpoint :  String
     , absenceModel : Absences.Models.Model
+    , userModel :    Users.Models.Model
     }
 
 
@@ -19,4 +21,5 @@ initialModel route =
     , route        = route
     , apiEndpoint  = "http://192.168.55.55:4000/api"
     , absenceModel = initAbsenceModel
+    , userModel    = initUserModel
     }
