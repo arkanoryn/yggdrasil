@@ -1,41 +1,61 @@
-defmodule Srcs.Mixfile do
+defmodule Server.Mixfile do
   use Mix.Project
 
   def project do
-    [
-      apps_path: "apps",
-      build_embedded: Mix.env == :prod,
-      start_permanent: Mix.env == :prod,
-      aliases: aliases(),
-      deps: deps()
-    ]
+    [app: :server,
+     version: "0.0.1",
+     elixir: "~> 1.2",
+     elixirc_paths: elixirc_paths(Mix.env),
+     compilers: [:phoenix, :gettext] ++ Mix.compilers,
+     build_embedded: Mix.env == :prod,
+     start_permanent: Mix.env == :prod,
+     aliases: aliases(),
+     deps: deps()]
   end
 
-  # Dependencies can be Hex packages:
+  # Configuration for the OTP application.
   #
-  #   {:mydep, "~> 0.3.0"}
+  # Type `mix help compile.app` for more information.
+  def application do
+    [mod: {Server, []},
+     applications: [:phoenix, :phoenix_pubsub, :cowboy, :logger, :gettext,
+                    :phoenix_ecto, :postgrex]]
+  end
+
+  # Specifies which paths to compile per environment.
+  defp elixirc_paths(:test), do: ["lib", "web", "test/support"]
+  defp elixirc_paths(_),     do: ["lib", "web"]
+
+  # Specifies your project dependencies.
   #
-  # Or git/path repositories:
-  #
-  #   {:mydep, git: "https://github.com/elixir-lang/mydep.git", tag: "0.1.0"}
-  #
-  # Type "mix help deps" for more examples and options.
-  #
-  # Dependencies listed here are available only for this project
-  # and cannot be accessed from applications inside the apps folder
+  # Type `mix help deps` for examples and options.
   defp deps do
-    [
-      {:tesla, "~> 0.6.0"},
+    [ {:phoenix, "~> 1.2.0"},
+      {:phoenix_pubsub, "~> 1.0"},
+      {:phoenix_ecto, "~> 3.0"},
+      {:postgrex, ">= 0.0.0"},
+      {:gettext, "~> 0.11"},
+      {:poison, "~> 2.0"},
       {:faker, "~> 0.7"},
-      {:poison, ">= 1.0.0"}
+      {:comeonin, "~> 2.5"},
+      {:guardian, "~> 0.13.0"},
+      {:timex, "~> 3.0"},
+      {:timex_ecto, "~> 3.0"},
+      {:tesla, "~> 0.6.0"},
+      {:cors_plug, "~> 1.2"},
+      {:cowboy, "~> 1.0"}
     ]
   end
 
+  # Aliases are shortcuts or tasks specific to the current project.
+  # For example, to create, migrate and run the seeds file at once:
+  #
+  #     $ mix ecto.setup
+  #
+  # See the documentation for `Mix` for more info on aliases.
   defp aliases do
-    [
-      "ecto.setup": ["ecto.create", "ecto.migrate", "run apps/db/priv/repo/seeds.exs"],
-      "ecto.reset": ["ecto.drop", "ecto.setup"],
-      "test": ["ecto.drop --quiet", "ecto.create --quiet", "ecto.migrate", "run apps/db/priv/repo/seeds.exs", "test"],
-    ]
+    ["ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
+     "ecto.reset": ["ecto.drop", "ecto.setup"],
+     "test": ["ecto.create --quiet", "ecto.migrate", "test"]]
   end
 end

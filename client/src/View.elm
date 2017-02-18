@@ -1,14 +1,15 @@
 module View exposing (view)
 
 import Absences.Models exposing (AbsenceId)
-import Absences.Views.Show
 import Absences.Views.List
 import Absences.Views.New
+import Absences.Views.Show
 import Html exposing (Html, div, text, span)
 import Html.Attributes exposing (style)
 import Layout.Drawer as Drawer
 import Layout.Header as Header
 import Layout.SubMenu as SubMenu
+import Login.Views.Form
 import Material.Color as Color
 import Material.Layout as Layout
 import Material.Scheme as Scheme
@@ -20,6 +21,33 @@ import Users.Views.Index
 
 view : Model -> Html Msg
 view model =
+    case model.loginModel.token of
+        Nothing ->
+            loginFormView model
+
+        Just token ->
+            loggedInView model
+
+
+loginFormView : Model -> Html Msg
+loginFormView model =
+    Scheme.topWithScheme Color.Blue Color.LightBlue <|
+        Layout.render Mdl
+            model.mdl
+            [ Layout.seamed
+            ]
+            { header = (Header.defaultHeader "Dashboard")
+            , drawer = []
+            , tabs = ([], [])
+            , main =
+                [ div
+                    [ style [ ( "padding", "1rem" ) ] ]
+                    [ Login.Views.Form.view model model.loginModel ]
+                ]
+            }
+
+loggedInView : Model -> Html Msg
+loggedInView model =
     Scheme.topWithScheme Color.Blue Color.LightBlue <|
         Layout.render Mdl
             model.mdl

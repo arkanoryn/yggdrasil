@@ -1,11 +1,7 @@
 module Login.Models exposing (..)
 
-import Users.Models exposing (User)
-
-
 type alias Model =
-    { user : Maybe User
-    , token : String
+    { token : Maybe String
     , loginForm : LoginForm
     }
 
@@ -16,10 +12,9 @@ type alias LoginForm =
     }
 
 
-initModel : Model
-initModel =
-    { user = Nothing
-    , token = ""
+initLoginModel : Model
+initLoginModel =
+    { token = Nothing
     , loginForm = initLoginForm
     }
 
