@@ -26,3 +26,16 @@ You will find instruction to setup each parts of the project at the root of each
 This project is meant to be developed using Vagrant as a development environment, instead of your own personal one.
 
 ArkAnoryn, 08.02.2017
+
+
+
+Get credentials:
+
+```
+datas = Tesla.post("http://localhost:4000/api/sessions/new", Poison.encode!(%{username: "arkanoryn", password: "1234567890"}), headers: %{"Content-Type" => "application/json"}).body |> Poison.decode!
+
+token = datas["data"]["token"]
+
+## /!\ Do not forget the "Bearer " before the token!!! /!\
+Tesla.get("http://localhost:4000/api/absences", headers: %{"Content-Type" => "application/json", "Authorization" => "Bearer #{token}"})
+```

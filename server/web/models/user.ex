@@ -7,7 +7,7 @@ defmodule Server.User do
     field :username, :string
     field :email, :string
     field :password, :string, virtual: true
-    field :password_hash
+    field :password_hash, :string
     has_many :absences, Server.Absence
 
     timestamps()

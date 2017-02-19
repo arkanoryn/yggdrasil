@@ -14,6 +14,11 @@ alias Server.Repo
 kind_list = ["disease", "vacation", "special_leave"]
 status_list = ["accepted", "refused", "pending"]
 
+
+user = %Server.User{}
+|> Server.User.registration_changeset(%{ username: "arkanoryn", email: "arkanoryn@test.com", password: "1234567890" })
+|> Repo.insert!
+
 for _ <- 1..3 do
     Repo.insert!(
       %Server.Absence
@@ -22,11 +27,27 @@ for _ <- 1..3 do
         status: Enum.random(status_list),
         begin_on: Timex.today,
         end_on: Timex.today,
-        half_day: false
+        half_day: false,
+        user_id: user.id
       }
     )
 end
 
-%Server.User{ username: "arkanoryn", email: "arkanoryn@gmail.com", password: "1234567890" }
-  |> Server.User.registration_changeset()
-  |> Repo.insert!
+
+user2 = %Server.User{}
+|> Server.User.registration_changeset(%{ username: "bck", email: "bck@test.com", password: "1234567890" })
+|> Repo.insert!
+
+for _ <- 1..5 do
+    Repo.insert!(
+      %Server.Absence
+      {
+        kind: Enum.random(kind_list),
+        status: Enum.random(status_list),
+        begin_on: Timex.today,
+        end_on: Timex.today,
+        half_day: false,
+        user_id: user2.id
+      }
+    )
+end
