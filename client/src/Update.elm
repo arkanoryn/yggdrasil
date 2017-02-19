@@ -1,6 +1,7 @@
 module Update exposing (..)
 
 import Absences.Update
+import Login.Update
 import Material
 import Messages exposing (Msg(..))
 import Models exposing (Model)
@@ -21,6 +22,13 @@ update msg model =
                     Absences.Update.update model absenceMsg model.absenceModel
             in
                 ( { model | absenceModel = absenceModel }, Cmd.map AbsencesMsg cmd )
+
+        LoginMsg loginMsg ->
+            let
+                ( loginModel, cmd ) =
+                    Login.Update.update model loginMsg model.loginModel
+            in
+                ( { model | loginModel = loginModel }, Cmd.map LoginMsg cmd )
 
         UsersMsg userMsg ->
             let

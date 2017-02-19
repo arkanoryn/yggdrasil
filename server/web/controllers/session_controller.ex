@@ -10,12 +10,11 @@ defmodule Server.SessionController do
       {:ok, user} ->
         new_conn      = Guardian.Plug.api_sign_in(conn, user)
         token         = Guardian.Plug.current_token(new_conn)
-        {:ok, claims} = Guardian.Plug.claims(new_conn)
-        exp           = Map.get(claims, "exp")
+        # {:ok, claims} = Guardian.Plug.claims(new_conn)
+        # exp           = Map.get(claims, "exp")
 
         new_conn
         |> put_resp_header("authorization", "Bearer #{token}")
-        |> put_resp_header("x-expires", exp)
         |> render("login.json", %{user: user, token: token})
       {:error, _changeset} ->
         conn
