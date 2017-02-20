@@ -19,7 +19,7 @@ init location =
         model =
             initialModel currentRoute
     in
-        model ! [ ]
+        model ! []
 
 
 subscriptions : Model -> Sub Msg

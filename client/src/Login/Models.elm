@@ -1,5 +1,6 @@
 module Login.Models exposing (..)
 
+
 type alias Model =
     { token : Maybe String
     , loginForm : LoginForm

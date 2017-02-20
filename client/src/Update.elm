@@ -52,7 +52,7 @@ update msg model =
                     model ! []
 
                 Just AbsenceIndex ->
-                    { model | route = AbsenceIndex } ! [ Cmd.batch [(Navigation.newUrl "#absences"), Cmd.map AbsencesMsg (AbsencesAPI.fetchAll model)] ]
+                    { model | route = AbsenceIndex } ! [ Cmd.batch [ (Navigation.newUrl "#absences"), Cmd.map AbsencesMsg (AbsencesAPI.fetchAll model) ] ]
 
                 Just page ->
                     { model | route = page } ! [ Navigation.newUrl (Routing.pageToUrl page) ]

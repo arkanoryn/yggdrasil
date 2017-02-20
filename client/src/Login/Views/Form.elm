@@ -34,6 +34,7 @@ usernameField model loginModel =
         ]
         []
 
+
 passwordField : Model -> Login.Models.Model -> Html Msg
 passwordField model loginModel =
     Textfield.render Mdl
@@ -47,6 +48,7 @@ passwordField model loginModel =
         , onInput (LoginMsg << Login.Messages.SetPassword)
         ]
         []
+
 
 submitButton : Model -> Login.Models.Model -> Html Msg
 submitButton model loginModel =

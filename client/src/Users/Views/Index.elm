@@ -13,8 +13,8 @@ import Material.Typography as Typography
 import Messages exposing (Msg(..))
 import Models exposing (Model)
 import Routing exposing (Route(..))
-import Users.Models exposing (User, UserId)
 import Users.Messages
+import Users.Models exposing (User, UserId)
 
 
 view : Model -> Html Msg

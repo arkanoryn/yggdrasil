@@ -1,10 +1,10 @@
 module Models exposing (..)
 
 import Absences.Models exposing (initAbsenceModel)
-import Users.Models exposing (initUserModel)
+import Login.Models exposing (initLoginModel)
 import Material
 import Routing
-import Login.Models exposing (initLoginModel)
+import Users.Models exposing (initUserModel)
 
 
 type alias Model =

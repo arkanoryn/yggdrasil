@@ -1,7 +1,8 @@
 module Login.Messages exposing (..)
 
-import Login.Models exposing (LoginForm)
 import Http
+import Login.Models exposing (LoginForm)
+
 
 type Msg
     = SetUsername String

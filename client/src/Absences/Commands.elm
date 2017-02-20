@@ -14,11 +14,14 @@ fetchAll model =
     let
         _ =
             Debug.log "fetchAll: " model.loginModel
-        token = case model.loginModel.token of
-            Just tok ->
-                tok
-            Nothing ->
-                ""
+
+        token =
+            case model.loginModel.token of
+                Just tok ->
+                    tok
+
+                Nothing ->
+                    ""
     in
         Http.request
             { body = emptyBody
@@ -81,11 +84,14 @@ createAbsenceRequest model absence =
     let
         _ =
             Debug.log "fetchAll: " model.loginModel
-        token = case model.loginModel.token of
-            Just tok ->
-                tok
-            Nothing ->
-                ""
+
+        token =
+            case model.loginModel.token of
+                Just tok ->
+                    tok
+
+                Nothing ->
+                    ""
     in
         Http.request
             { body = encodedAbsence absence |> Http.jsonBody
@@ -95,4 +101,4 @@ createAbsenceRequest model absence =
             , timeout = Nothing
             , url = createAbsenceUrl model.apiEndpoint
             , withCredentials = False
-        }
+            }

@@ -33,14 +33,15 @@ loginRequest model loginForm =
         , withCredentials = False
         }
 
+
 encodeLogin : LoginForm -> Encode.Value
 encodeLogin loginForm =
     Encode.object
-        [ ("username", Encode.string loginForm.username)
-        , ("password", Encode.string loginForm.password)
+        [ ( "username", Encode.string loginForm.username )
+        , ( "password", Encode.string loginForm.password )
         ]
 
 
 tokenDecoder : Decode.Decoder String
 tokenDecoder =
-    (Decode.at ["data", "token"] Decode.string)
+    (Decode.at [ "data", "token" ] Decode.string)

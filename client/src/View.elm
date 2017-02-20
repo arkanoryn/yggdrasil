@@ -38,13 +38,14 @@ loginFormView model =
             ]
             { header = (Header.defaultHeader "Dashboard")
             , drawer = []
-            , tabs = ([], [])
+            , tabs = ( [], [] )
             , main =
                 [ div
                     [ style [ ( "padding", "1rem" ) ] ]
                     [ Login.Views.Form.view model model.loginModel ]
                 ]
             }
+
 
 loggedInView : Model -> Html Msg
 loggedInView model =

@@ -5,8 +5,8 @@ import Json.Decode as Decode exposing (field)
 import Json.Encode as Encode
 import Models exposing (Model)
 import Task
-import Users.Models
 import Users.Messages exposing (Msg(..))
+import Users.Models
 
 
 registerUrl : Model -> String

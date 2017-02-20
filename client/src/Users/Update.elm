@@ -1,8 +1,8 @@
 module Users.Update exposing (update)
 
-import Users.Models as UserMod
-import Users.Messages exposing (Msg(..))
 import Models exposing (Model)
+import Users.Messages exposing (Msg(..))
+import Users.Models as UserMod
 
 
 update : Model -> Msg -> UserMod.Model -> ( UserMod.Model, Cmd Msg )
