@@ -10,6 +10,6 @@ type Msg
     | CreateAbsence
     | ShowAbsences
     | ShowAbsence AbsenceId
-    | ChangeKind String
     | ChangeBeginOn String
     | ChangeEndOn String
+    | SelectKind String

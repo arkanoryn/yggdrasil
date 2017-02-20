@@ -50,7 +50,7 @@ update model msg absenceModel =
         ShowAbsence id ->
             absenceModel ! [ Navigation.newUrl ("#absences/" ++ id) ]
 
-        ChangeKind newKind ->
+        SelectKind newKind ->
             let
                 oldNewAbsence =
                     absenceModel.newAbsence

@@ -1,5 +1,6 @@
 module Absences.Models exposing (..)
 
+import Dropdown
 
 type alias AbsenceId =
     String
@@ -8,7 +9,6 @@ type alias AbsenceId =
 type alias Model =
     { absences : List Absence
     , newAbsence : Absence
-    , selectedKind : Maybe String
     }
 
 
@@ -25,7 +25,6 @@ initAbsenceModel : Model
 initAbsenceModel =
     { absences = []
     , newAbsence = initAbsence
-    , selectedKind = Nothing
     }
 
 

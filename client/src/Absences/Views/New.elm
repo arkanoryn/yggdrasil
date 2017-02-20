@@ -2,12 +2,14 @@ module Absences.Views.New exposing (view, header)
 
 import Absences.Messages
 import Absences.Models
-import Html exposing (Html, div, text, label)
+import Dropdown
+import Html exposing (Html, div, text, label, span)
 import Layout.Header
 import Material.Button as Button
 import Material.Grid exposing (grid, size, cell, stretch, Device(..), offset)
-import Material.Options exposing (Style, onClick, onInput, css)
+import Material.Options as Options exposing (Style, onClick, onInput, css, onToggle)
 import Material.Textfield as Textfield
+import Material.Toggles as Toggles
 import Messages exposing (Msg(..))
 import Models exposing (Model)
 
@@ -29,17 +31,42 @@ view model absenceModel =
 
 kindField : Model -> Absences.Models.Model -> Html Msg
 kindField model absenceModel =
-    Textfield.render Mdl
-        [ 0, 0, 0 ]
-        model.mdl
-        [ Textfield.label "kind"
-        , Textfield.floatingLabel
-        , Textfield.text_
-        , css "width" "100%"
-        , Textfield.value absenceModel.newAbsence.kind
-        , onInput (AbsencesMsg << Absences.Messages.ChangeKind)
-        ]
-        []
+    div
+    []
+    [ Options.div
+          []
+          [ text "kind" ]
+    , Toggles.radio Mdl
+          [ 0, 0, 0, 1]
+          model.mdl
+          [ Toggles.value ( "vacation" == absenceModel.newAbsence.kind )
+          , Toggles.group "KindGroup"
+          , Toggles.ripple
+          , css "margin" "10px"
+          , onToggle (AbsencesMsg <| (Absences.Messages.SelectKind "vacation"))
+          ]
+          [ text "Vacation" ]
+    , Toggles.radio Mdl
+          [ 0, 0, 0, 2]
+          model.mdl
+          [ Toggles.value ( "disease" == absenceModel.newAbsence.kind )
+          , Toggles.group "KindGroup"
+          , Toggles.ripple
+          , css "margin" "10px"
+          , onToggle (AbsencesMsg <| (Absences.Messages.SelectKind "disease"))
+          ]
+          [ text "Disease" ]
+    , Toggles.radio Mdl
+          [ 0, 0, 0, 3]
+          model.mdl
+          [ Toggles.value ( "special_leave" == absenceModel.newAbsence.kind )
+          , Toggles.group "KindGroup"
+          , Toggles.ripple
+          , css "margin" "10px"
+          , onToggle (AbsencesMsg <| (Absences.Messages.SelectKind "special_leave"))
+          ]
+          [ text "Special Leave" ]
+    ]
 
 
 beginOnField : Model -> Absences.Models.Model -> Html Msg
@@ -84,29 +111,6 @@ submitButton model absenceModel =
         , onClick (AbsencesMsg Absences.Messages.CreateAbsence)
         ]
         [ text "Submit" ]
-
-
-kindDropdownOptions : Html Msg
-kindDropdownOptions =
-    div [] []
-
-
-
---     let
---         kindOptions =
---             Dropdown.defaultOptions (AbsencesMsg Absences.Messages.KindDropdownChanged )
---     in
---         { kindOptions
---             | items =
---                 [ { value = "vacation", text = "Vacation", enabled = True }
---                 , { value = "disease", text = "Disease", enabled = True }
---                 , { value = "special_leave", text = "Special leave", enabled = True }
---                 ]
---             , emptyItem = Nothing
---         }
--- tagged : Form.Msg -> Msg
--- tagged =
---     AbsencesMsg << Absences.Messages.NewAbsenceFormMsg
 
 
 cellOptions : List (Style a)
