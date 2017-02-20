@@ -45,7 +45,7 @@ update model msg absenceModel =
             absenceModel ! [ API.create model absenceModel.newAbsence ]
 
         ShowAbsences ->
-            absenceModel ! [ (Navigation.newUrl "#absences") ]
+            absenceModel ! [ ( API.fetchAll model) ]
 
         ShowAbsence id ->
             absenceModel ! [ Navigation.newUrl ("#absences/" ++ id) ]

@@ -2,7 +2,7 @@ module Absences.Commands exposing (..)
 
 import Absences.Messages exposing (..)
 import Absences.Models exposing (AbsenceId, Absence)
-import Http
+import Http exposing (emptyBody)
 import Json.Decode as Decode exposing (field)
 import Json.Encode as Encode
 import Models exposing (Model)
@@ -11,8 +11,25 @@ import Task
 
 fetchAll : Model -> Cmd Msg
 fetchAll model =
-    Http.get (fetchAllUrl model.apiEndpoint) (Decode.at [ "data" ] collectionDecoder)
-        |> Http.send OnFetchAll
+    let
+        _ =
+            Debug.log "fetchAll: " model.loginModel
+        token = case model.loginModel.token of
+            Just tok ->
+                tok
+            Nothing ->
+                ""
+    in
+        Http.request
+            { body = emptyBody
+            , expect = Http.expectJson (Decode.at [ "data" ] collectionDecoder)
+            , headers = [ Http.header "Authorization" ("Bearer " ++ token) ]
+            , method = "GET"
+            , timeout = Nothing
+            , url = fetchAllUrl model.apiEndpoint
+            , withCredentials = False
+            }
+            |> Http.send OnFetchAll
 
 
 fetchAllUrl : String -> String

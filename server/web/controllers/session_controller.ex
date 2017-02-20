@@ -3,8 +3,6 @@ defmodule Server.SessionController do
 
   plug :scrub_params, "user" when action in [:create]
 
-  require IEx
-
   def login(conn, params) do
     case Server.User.find_and_confirm_password(params) do
       {:ok, user} ->

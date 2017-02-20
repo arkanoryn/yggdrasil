@@ -7,7 +7,6 @@ defmodule Server.AbsenceController do
   @kinds ["disease", "vacation", "special_leave"]
   @statuses ["accepted", "refused", "pending", "canceled"]
 
-  require IEx
   def index(conn, _params, user, _claims) do
     absences =
       Ecto.assoc(user, :absences)

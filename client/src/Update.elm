@@ -1,12 +1,14 @@
 module Update exposing (..)
 
+import Absences.Commands as AbsencesAPI
+import Absences.Messages
 import Absences.Update
 import Login.Update
 import Material
 import Messages exposing (Msg(..))
 import Models exposing (Model)
 import Navigation exposing (..)
-import Routing exposing (parseLocation, pageToUrl)
+import Routing exposing (parseLocation, pageToUrl, Route(..))
 import Users.Update
 
 
@@ -48,6 +50,9 @@ update msg model =
             case maybePage of
                 Nothing ->
                     model ! []
+
+                Just AbsenceIndex ->
+                    { model | route = AbsenceIndex } ! [ Cmd.batch [(Navigation.newUrl "#absences"), Cmd.map AbsencesMsg (AbsencesAPI.fetchAll model)] ]
 
                 Just page ->
                     { model | route = page } ! [ Navigation.newUrl (Routing.pageToUrl page) ]
