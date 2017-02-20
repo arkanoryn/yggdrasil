@@ -1,6 +1,7 @@
 module Absences.Messages exposing (..)
 
-import Absences.Models exposing (AbsenceId, Absence)
+import Absences.Models exposing (AbsenceId, Absence, DateField(..))
+import Date exposing (Date)
 import Http
 
 
@@ -10,6 +11,7 @@ type Msg
     | CreateAbsence
     | ShowAbsences
     | ShowAbsence AbsenceId
-    | ChangeKind String
-    | ChangeBeginOn String
-    | ChangeEndOn String
+    | SelectKind String
+    | OpenDropdown DateField
+    | CloseDropdown
+    | SelectDate DateField Date

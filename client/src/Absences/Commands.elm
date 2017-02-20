@@ -78,12 +78,21 @@ create model absence =
 
 createAbsenceRequest : Model -> Absences.Models.Absence -> Http.Request Absence
 createAbsenceRequest model absence =
-    Http.request
-        { body = encodedAbsence absence |> Http.jsonBody
-        , expect = Http.expectJson (Decode.at [ "data" ] (Decode.at [ "create_absence" ] memberDecoder))
-        , headers = []
-        , method = "POST"
-        , timeout = Nothing
-        , url = createAbsenceUrl model.apiEndpoint
-        , withCredentials = False
+    let
+        _ =
+            Debug.log "fetchAll: " model.loginModel
+        token = case model.loginModel.token of
+            Just tok ->
+                tok
+            Nothing ->
+                ""
+    in
+        Http.request
+            { body = encodedAbsence absence |> Http.jsonBody
+            , expect = Http.expectJson (Decode.at [ "data" ] (Decode.at [ "create_absence" ] memberDecoder))
+            , headers = [ Http.header "Authorization" ("Bearer " ++ token) ]
+            , method = "POST"
+            , timeout = Nothing
+            , url = createAbsenceUrl model.apiEndpoint
+            , withCredentials = False
         }

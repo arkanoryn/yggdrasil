@@ -30,6 +30,7 @@ update model msg loginModel =
                 | token = Just token
                 , loginForm = initLoginForm
             } ! []
+            -- Redirect to Home would be great
 
         OnAuth (Err error) ->
             let

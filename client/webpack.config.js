@@ -23,6 +23,13 @@ module.exports = {
 
   module: {
     loaders: [
+      {
+        test: /\.(css|scss)$/,
+        use: [
+          'style-loader',
+          'css-loader',
+        ]
+      },
       // We want to output html files from our project in the output directory
       {
         test: /\.html$/,

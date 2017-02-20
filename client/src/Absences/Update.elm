@@ -2,7 +2,9 @@ module Absences.Update exposing (..)
 
 import Absences.Commands as API
 import Absences.Messages exposing (Msg(..))
-import Absences.Models exposing (Absence)
+import Absences.Models exposing (Absence, DateField(..))
+import Date exposing (Date)
+import Date.Extra as Date
 import Models exposing (Model)
 import Navigation
 
@@ -50,7 +52,7 @@ update model msg absenceModel =
         ShowAbsence id ->
             absenceModel ! [ Navigation.newUrl ("#absences/" ++ id) ]
 
-        ChangeKind newKind ->
+        SelectKind newKind ->
             let
                 oldNewAbsence =
                     absenceModel.newAbsence
@@ -60,22 +62,37 @@ update model msg absenceModel =
                 }
                     ! []
 
-        ChangeBeginOn newBeginOn ->
-            let
-                oldNewAbsence =
-                    absenceModel.newAbsence
-            in
-                { absenceModel
-                    | newAbsence = { oldNewAbsence | begin_on = newBeginOn }
-                }
-                    ! []
+        OpenDropdown dateField ->
+            { absenceModel | openDateField = Just dateField } ! []
 
-        ChangeEndOn newEndOn ->
-            let
-                oldNewAbsence =
-                    absenceModel.newAbsence
-            in
-                { absenceModel
-                    | newAbsence = { oldNewAbsence | end_on = newEndOn }
-                }
-                    ! []
+        CloseDropdown ->
+            { absenceModel | openDateField = Nothing } ! []
+
+        SelectDate dateField date ->
+            case dateField of
+                BeginOn ->
+                    let
+                        oldNewAbsence =
+                            absenceModel.newAbsence
+                    in
+                        { absenceModel
+                            | newAbsence = { oldNewAbsence | begin_on = (formateDate date) }
+                            , begin_on_tmp = date
+                        }
+                            ! []
+
+                EndOn ->
+                    let
+                        oldNewAbsence =
+                            absenceModel.newAbsence
+                    in
+                        { absenceModel
+                            | newAbsence = { oldNewAbsence | end_on = (formateDate date) }
+                            , end_on_tmp = date
+                        }
+                            ! []
+
+
+formateDate : Date -> String
+formateDate date =
+    Date.toFormattedString "y-MM-dd" date
