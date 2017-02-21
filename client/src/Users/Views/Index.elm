@@ -12,7 +12,6 @@ import Material.Options as Options exposing (onClick, css)
 import Material.Typography as Typography
 import Messages exposing (Msg(..))
 import Models exposing (Model)
-import Routing exposing (Route(..))
 import Users.Messages
 import Users.Models exposing (User, UserId)
 
@@ -31,26 +30,24 @@ userList model usersModel =
 userCard : Model -> Users.Models.Model -> Int -> Users.Models.User -> Material.Grid.Cell Msg
 userCard model usersModel id user =
     cell
-        [ size Desktop 4
+        [ size Desktop 3
         , size Tablet 6
         , size Phone 12
         ]
         [ Card.view
             [ dynamic user.id usersModel
             , css "width" "100%"
+            , css "padding" "0"
             ]
-            [ Card.actions
+            [ Card.menu
                 [ Card.border
-                , css "display" "flex"
-                , css "padding" "8px 16px 8px 16px"
-                , Typography.caption
-                , Typography.contrast 0.77
                 ]
                 [ Button.render Mdl
                     [ 0, 0, id ]
                     model.mdl
                     [ Button.icon
                     , Button.ripple
+                    , blue
                       -- , Options.onClick <| NavigateTo <| Just (UsersEdit users.id)
                     ]
                     [ Icon.i "mode_edit" ]
@@ -60,6 +57,7 @@ userCard model usersModel id user =
                     [ Button.icon
                     , Button.ripple
                     , Button.accent
+                    , red
                       -- , Options.onClick <| UsersMsg <| (Users.Messages.DeleteUsers users)
                     ]
                     [ Icon.i "delete" ]
@@ -67,7 +65,6 @@ userCard model usersModel id user =
             , Card.title
                 [ css "height" "256px"
                 , css "padding" "0"
-                  -- Clear default padding to encompass scrim
                 , css "background" ("url('" ++ (background user.username) ++ "') center / cover")
                 ]
                 [ Card.head
@@ -89,6 +86,16 @@ userCard model usersModel id user =
                 [ text user.email ]
             ]
         ]
+
+
+red : Options.Property c m
+red =
+    Color.text (Color.color Color.Red Color.A200)
+
+
+blue : Options.Property c m
+blue =
+    Color.text (Color.color Color.Blue Color.A200)
 
 
 white : Options.Property c m

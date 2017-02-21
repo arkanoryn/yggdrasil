@@ -1,6 +1,5 @@
 module Main exposing (..)
 
-import Absences.Commands exposing (fetchAll)
 import Material
 import Messages exposing (Msg(..))
 import Models exposing (Model, initialModel)
