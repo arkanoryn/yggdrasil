@@ -1,7 +1,6 @@
 module Update exposing (..)
 
 import Absences.Commands as AbsencesAPI
-import Absences.Messages
 import Absences.Update
 import Login.Update
 import Material
@@ -32,6 +31,16 @@ update msg model =
             in
                 ( { model | loginModel = loginModel }, Cmd.map LoginMsg cmd )
 
+        SetFlags flags ->
+            let
+                oldLoginModel =
+                    model.loginModel
+
+                newLoginModel =
+                    { oldLoginModel | token = (Just flags.token) }
+            in
+                { model | loginModel = newLoginModel } ! []
+
         UsersMsg userMsg ->
             let
                 ( userModel, cmd ) =
@@ -56,3 +65,6 @@ update msg model =
 
                 Just page ->
                     { model | route = page } ! [ Navigation.newUrl (Routing.pageToUrl page) ]
+
+        NoOp ->
+            model ! []

@@ -1,16 +1,17 @@
-module Main exposing (..)
+port module Main exposing (..)
 
 import Material
 import Messages exposing (Msg(..))
-import Models exposing (Model, initialModel)
+import Models exposing (Flags, Model, initialModel)
 import Navigation exposing (Location)
+import Ports exposing (retrieve, mapStorage)
 import Routing exposing (Route)
 import Update exposing (update)
 import View exposing (view)
 
 
-init : Location -> ( Model, Cmd Msg )
-init location =
+init : Flags -> Location -> ( Model, Cmd Msg )
+init flags location =
     let
         currentRoute =
             Routing.parseLocation location
@@ -23,16 +24,19 @@ init location =
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Material.subscriptions Mdl model
+    Sub.batch
+        [ Material.subscriptions Mdl model
+        , retrieve mapStorage
+        ]
 
 
 
 -- MAIN
 
 
-main : Program Never Model Msg
+main : Program Flags Model Msg
 main =
-    Navigation.program NewLocation
+    Navigation.programWithFlags NewLocation
         { init = init
         , view = view
         , update = update

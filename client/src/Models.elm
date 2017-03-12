@@ -17,6 +17,12 @@ type alias Model =
     }
 
 
+type alias Flags =
+    { user : String
+    , token : String
+    }
+
+
 initialModel : Routing.Route -> Model
 initialModel route =
     { mdl = Material.model

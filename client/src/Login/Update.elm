@@ -4,6 +4,7 @@ import Login.Commands as API
 import Login.Messages exposing (Msg(..))
 import Login.Models exposing (initLoginForm)
 import Models exposing (Model)
+import Ports exposing (sendToStorage)
 
 
 update : Model -> Login.Messages.Msg -> Login.Models.Model -> ( Login.Models.Model, Cmd Msg )
@@ -27,11 +28,15 @@ update model msg loginModel =
             loginModel ! [ API.authMe model loginModel.loginForm ]
 
         OnAuth (Ok token) ->
-            { loginModel
-                | token = Just token
-                , loginForm = initLoginForm
-            }
-                ! []
+            let
+                username =
+                    loginModel.loginForm.username
+            in
+                { loginModel
+                    | token = Just token
+                    , loginForm = initLoginForm
+                }
+                    ! [ (sendToStorage token username) ]
 
         -- Redirect to Home would be great
         OnAuth (Err error) ->
