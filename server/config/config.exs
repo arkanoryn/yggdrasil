@@ -35,3 +35,7 @@ config :guardian,
   verify_issuer: true, # optional
   secret_key: "Q/pRXuJQoZblGk4AIOHhMX0AkzuUpBS91hQVlO06PqrtRd/iAobc3CdBkMPDVYgc",
   serializer: Server.GuardianSerializer
+
+
+config :server, Server.Services.Mailers.LocalMailer,
+    adapter: Bamboo.LocalAdapter

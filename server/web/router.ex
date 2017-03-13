@@ -25,4 +25,8 @@ defmodule Server.Router do
     resources "/absences", AbsenceController, except: [:new, :edit]
     resources "/contracts", ContractController, except: [:new, :edit]
   end
+
+  if Mix.env == :dev do
+    forward "/sent_emails", Bamboo.EmailPreviewPlug
+  end
 end
