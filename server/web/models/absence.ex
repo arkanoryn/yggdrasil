@@ -24,4 +24,8 @@ defmodule Server.Absence do
   def with_user(query) do
     from q in query, preload: :user
   end
+
+  def accepted(query) do
+    from q in query, where: q.status == "accepted"
+  end
 end

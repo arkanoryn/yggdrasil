@@ -21,6 +21,7 @@ defmodule Server.Router do
     pipe_through :api
 
     resources "/users", UserController, except: [:new, :edit]
+    get "/accepted_absences", AbsenceController, :all_accepted
     resources "/absences", AbsenceController, except: [:new, :edit]
     resources "/contracts", ContractController, except: [:new, :edit]
   end
